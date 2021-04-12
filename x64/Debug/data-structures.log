@@ -1,0 +1,7 @@
+﻿  Vector.cpp
+C:\Users\Екатерина\Documents\уник\прога\data-structures\data-structures\Vector.cpp(7,23): warning C4244: инициализация: преобразование "size_t" в "ValueType", возможна потеря данных
+C:\Users\Екатерина\Documents\уник\прога\data-structures\data-structures\Vector.cpp(15,36): warning C4244: инициализация: преобразование "size_t" в "ValueType", возможна потеря данных
+C:\Users\Екатерина\Documents\уник\прога\data-structures\data-structures\Vector.cpp(26,36): warning C4244: инициализация: преобразование "size_t" в "ValueType", возможна потеря данных
+C:\Users\Екатерина\Documents\уник\прога\data-structures\data-structures\Vector.cpp(37,36): warning C4244: инициализация: преобразование "size_t" в "ValueType", возможна потеря данных
+C:\Users\Екатерина\Documents\уник\прога\data-structures\data-structures\Vector.cpp(42,2): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+LINK : fatal error LNK1561: точка входа должна быть определена
