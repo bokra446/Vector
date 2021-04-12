@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include "IVector.h"
 class Vector : public IVector{
 private:
@@ -30,7 +31,15 @@ public:
 
 	size_t find(const ValueType& value) const override;
 
+	void print(std::ostream& stream = std::cout) const;
+	void scan(std::istream& stream = std::cin);
+
 	void calculateLoadFactor();
 	void resize();
 	bool isEmpty();
 };
+
+std::ostream& operator<<(std::ostream& stream, 
+	const Vector& vector);
+std::istream& operator>>
+(std::istream& s, Vector& vector);

@@ -1,6 +1,7 @@
 #include "Vector.h"
 #include <algorithm>
 #include <stdexcept>
+#include <iostream>
 
 Vector::Vector() {
 }
@@ -17,6 +18,10 @@ Vector::Vector(ValueType* data, size_t size){
 
 Vector::~Vector() {
 	delete[] _data;
+	_data = nullptr;
+	_size = 0;
+	_capacity = 1;
+	_loadFactor = 0;
 }
 
 ///
@@ -62,7 +67,7 @@ void Vector::pushFront(const ValueType& value) {
 
 void Vector::insert(const ValueType& value, size_t idx) {
 	++_size;
-	if (isEmpty) {
+	if (isEmpty()) {
 		_data = new ValueType(1);
 	}
 	ValueType prevValue, curValue;
@@ -106,7 +111,7 @@ void Vector:: clear() {
 }
 
 void Vector::erase(size_t i) {
-	if (!isEmpty) {
+	if (!isEmpty()) {
 		for (int j = i + 1; j < _size; ++j) {
 			_data[j - 1] = _data[j];
 		}
@@ -136,4 +141,37 @@ size_t Vector::find(const ValueType& value) const {
 		}
 	}
 	throw std::exception("Not found");
+}
+
+void Vector::print(std::ostream& stream) const{
+	stream << "size = " << _size
+		<< "; elements : {";
+	for (int i = 0; i < _size; ++i) {
+		stream << _data[i] << ", ";
+	}
+	stream << "} \n";
+}
+
+void Vector::scan(std::istream& stream) {
+	std::cout << "size = ";
+	stream >> _size;
+	std::cout << "data = ";
+	for (int i = 0; i < _size; ++i) {
+		stream >> _data[i];
+	}
+	std::cout << std::endl;
+}
+
+///
+
+std::ostream& operator<<(std::ostream& stream, 
+	const Vector& vector) {
+	vector.print(stream);
+	return stream;
+}
+
+std::istream& operator>>
+(std::istream& stream, Vector& vector){
+	vector.scan(stream);
+	return stream;
 }
