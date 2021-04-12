@@ -2,18 +2,103 @@
 #include <algorithm>
 #include <stdexcept>
 #include <iostream>
+#include <stdlib.h>
 
 Vector::Vector() {
 }
 
-Vector::Vector(ValueType* data, size_t size){
+Vector::Vector(ValueType* data, size_t size) {
 	if (size != 0) {
 		_size = size;
 		_capacity = size * 2;
-		_loadFactor = 0, 5;
-		_data = new ValueType(_capacity);
-		memcpy(_data, data, size);
+		_loadFactor = 0.5;
+		_data = new ValueType[_capacity];
+		for (int i = 0; i < size; ++i) {
+			_data[i] = data[i];
+		}
 	}
+}
+
+Vector::Vector(const Vector& other) {
+	if (this != &other) {
+		_size = other._size;
+		_capacity = other._capacity;
+		if (_data != nullptr) {
+			delete[] _data;
+		}
+		if (_size == 0) {
+			_data = nullptr;
+		}
+		else {
+			_data = new ValueType[_capacity];
+			for (int i = 0; i < _size; ++i) {
+				_data[i] = other._data[i];
+			}
+		}
+	}
+}
+
+Vector::Vector(Vector&& other) noexcept {
+	if (this != &other) {
+		if (_data != nullptr) {
+			delete[] _data;
+		}
+		_size = other._size;
+		_capacity = other._capacity;
+		if (_size == 0) {
+			_data = nullptr;
+		}
+		else {
+			_data = new ValueType[_capacity];
+			for (int i = 0; i < _size; ++i) {
+				_data[i] = other._data[i];
+			}
+		}
+		other._data = nullptr;
+		other.clear();
+	}
+}
+
+Vector& Vector::operator=(const Vector& other) {
+	if (this != &other) {
+		_size = other._size;
+		_capacity = other._capacity;
+		if (_data != nullptr) {
+			delete[] _data;
+		}
+		if (_size == 0) {
+			_data = nullptr;
+		}
+		else {
+			_data = new ValueType[_capacity];
+			for (int i = 0; i < _size; ++i) {
+				_data[i] = other._data[i];
+			}
+		}
+	}
+	return *this;
+}
+
+Vector& Vector::operator=(Vector&& other) noexcept {
+	if (this != &other) {
+		if (_data != nullptr) {
+			delete[] _data;
+		}
+		_size = other._size;
+		_capacity = other._capacity;
+		if (_size == 0) {
+			_data = nullptr;
+		}
+		else {
+			_data = new ValueType[_capacity];
+			for (int i = 0; i < _size; ++i) {
+				_data[i] = other._data[i];
+			}
+		}
+		other._data = nullptr;
+		other.clear();
+	}
+	return *this;
 }
 
 Vector::~Vector() {
@@ -27,17 +112,19 @@ Vector::~Vector() {
 ///
 
 void Vector::calculateLoadFactor() {
-	_loadFactor = _size / _capacity;
+	_loadFactor = (float)_size / _capacity;
 }
 
 void Vector::resize() {
 	calculateLoadFactor();
-	if ((_loadFactor == 1) || (_loadFactor <= 0, 25)) {
-		_capacity = _size / _loadFactor;
-		if (!_capacity) {
-			_capacity = 1;
+	if ((_loadFactor == 1) || (_loadFactor <= 0.25)) {
+		if (_loadFactor) {
+			_capacity = _capacity * 2;
 		}
-		ValueType* newdata = new ValueType(_capacity);
+		else {
+			_capacity = _capacity / 2 + 1;
+		}
+		ValueType* newdata = new ValueType[_capacity];
 		for (int i = 0; i < _size; ++i) {
 			newdata[i] = _data[i];
 		}
@@ -53,6 +140,12 @@ bool Vector::isEmpty() {
 	else {
 		return 0;
 	}
+}
+
+void Vector::swap(Vector& other) {
+	std::swap(other._data, _data);
+	std::swap(other._capacity, _capacity);
+	std::swap(other._size, _size);
 }
 
 ///
@@ -73,10 +166,10 @@ void Vector::insert(const ValueType& value, size_t idx) {
 	ValueType prevValue, curValue;
 	prevValue = _data[idx];
 	_data[idx] = value;
-	for (int i = idx + 1; i <= _size; ++i) {
+	for (int i = idx + 1; i < _size; ++i) {
 		curValue = _data[i];
 		_data[i] = prevValue;
-		prevValue = value;
+		prevValue = curValue;
 	}
 	resize();
 }
@@ -99,11 +192,11 @@ const ValueType& Vector::at(size_t idx) const {
 	return _data[idx];
 }
 
-const ValueType& Vector::operator[](size_t idx) const{
+const ValueType& Vector::operator[](size_t idx) const {
 	return at(idx);
 }
 
-void Vector:: clear() {
+void Vector::clear() {
 	_capacity = 1;
 	_size = 0;
 	delete[] _data;
@@ -140,38 +233,23 @@ size_t Vector::find(const ValueType& value) const {
 			return i;
 		}
 	}
-	throw std::exception("Not found");
+	std::cout << "Not found" << std::endl;
+	return -1;
 }
 
-void Vector::print(std::ostream& stream) const{
+void Vector::print(std::ostream& stream) const {
 	stream << "size = " << _size
 		<< "; elements : {";
-	for (int i = 0; i < _size; ++i) {
+	for (int i = 0; i < _size - 1; ++i) {
 		stream << _data[i] << ", ";
 	}
-	stream << "} \n";
-}
-
-void Vector::scan(std::istream& stream) {
-	std::cout << "size = ";
-	stream >> _size;
-	std::cout << "data = ";
-	for (int i = 0; i < _size; ++i) {
-		stream >> _data[i];
-	}
-	std::cout << std::endl;
+	stream << _data[_size - 1] << "} \n";
 }
 
 ///
 
-std::ostream& operator<<(std::ostream& stream, 
+std::ostream& operator<<(std::ostream& stream,
 	const Vector& vector) {
 	vector.print(stream);
-	return stream;
-}
-
-std::istream& operator>>
-(std::istream& stream, Vector& vector){
-	vector.scan(stream);
 	return stream;
 }

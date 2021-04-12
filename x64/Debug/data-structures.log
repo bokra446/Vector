@@ -1,8 +1,4 @@
 ﻿  Vector.cpp
-C:\Users\Екатерина\Documents\уник\прога\data-structures\data-structures\Vector.cpp(14,24): warning C4244: инициализация: преобразование "size_t" в "ValueType", возможна потеря данных
-C:\Users\Екатерина\Documents\уник\прога\data-structures\data-structures\Vector.cpp(30,22): warning C4244: =: преобразование "size_t" в "float", возможна потеря данных
-C:\Users\Екатерина\Documents\уник\прога\data-structures\data-structures\Vector.cpp(36,21): warning C4244: =: преобразование "float" в "size_t", возможна потеря данных
-C:\Users\Екатерина\Documents\уник\прога\data-structures\data-structures\Vector.cpp(40,37): warning C4244: инициализация: преобразование "size_t" в "ValueType", возможна потеря данных
-C:\Users\Екатерина\Documents\уник\прога\data-structures\data-structures\Vector.cpp(76,2): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\Екатерина\Documents\уник\прога\data-structures\data-structures\Vector.cpp(115,3): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
-LINK : fatal error LNK1561: точка входа должна быть определена
+C:\Users\Екатерина\Documents\уник\прога\data-structures\data-structures\Vector.cpp(169,2): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Екатерина\Documents\уник\прога\data-structures\data-structures\Vector.cpp(208,3): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+  data-structures.vcxproj -> C:\Users\Екатерина\Documents\уник\прога\data-structures\x64\Debug\data-structures.exe

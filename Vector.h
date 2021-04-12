@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include "IVector.h"
-class Vector : public IVector{
+class Vector : public IVector {
 private:
 	ValueType* _data = nullptr;
 	size_t _size = 0;
@@ -10,6 +10,10 @@ private:
 public:
 	Vector();
 	Vector(ValueType* data, size_t size);
+	Vector(const Vector& other);
+	Vector(Vector&& other) noexcept;
+	Vector& operator=(const Vector& other);
+	Vector& operator=(Vector&& other) noexcept;
 	~Vector();
 
 
@@ -18,9 +22,9 @@ public:
 	void insert(const ValueType& value, size_t idx) override;
 
 	ValueType& at(size_t idx) override;
-	ValueType& operator[](size_t idx);
+	ValueType& operator[](size_t idx) override;
 	const ValueType& at(size_t idx) const override;
-	const ValueType& operator[](size_t idx) const;
+	const ValueType& operator[](size_t idx) const override;
 
 	void clear() override;
 	void erase(size_t i) override;
@@ -32,14 +36,12 @@ public:
 	size_t find(const ValueType& value) const override;
 
 	void print(std::ostream& stream = std::cout) const;
-	void scan(std::istream& stream = std::cin);
 
 	void calculateLoadFactor();
 	void resize();
 	bool isEmpty();
+	void swap(Vector& other);
 };
 
-std::ostream& operator<<(std::ostream& stream, 
+std::ostream& operator<<(std::ostream& stream,
 	const Vector& vector);
-std::istream& operator>>
-(std::istream& s, Vector& vector);
