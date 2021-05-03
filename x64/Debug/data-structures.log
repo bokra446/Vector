@@ -1,4 +1,0 @@
-﻿  Vector.cpp
-C:\Users\Екатерина\Documents\уник\прога\data-structures\data-structures\Vector.cpp(169,2): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\Екатерина\Documents\уник\прога\data-structures\data-structures\Vector.cpp(208,3): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
-  data-structures.vcxproj -> C:\Users\Екатерина\Documents\уник\прога\data-structures\x64\Debug\data-structures.exe
